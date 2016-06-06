@@ -1,7 +1,8 @@
 {
   "name": "synced_events",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Disparando funcoes nos clientes de forma sincronizada",
+  "main": "app.js",
   "dependencies": {
     "express": "^4.13.4",
     "socket.io": "^1.4.6"

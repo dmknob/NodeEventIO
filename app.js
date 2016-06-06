@@ -41,6 +41,7 @@ io.on("connection", function (socket) {
     });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+  var addr = http.address();
+  console.log("Server listening at", addr.address + ":" + addr.port);
 });
