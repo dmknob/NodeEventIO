@@ -1,16 +1,41 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var bodyParser = require('body-parser');
 var interval;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.post('/admin', function(req, res){
+  color = req.body.color;
+  //res.writeHead(200);
+  //res.end();
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end('thanks');
+  res.redirect('back');
+  console.log(color);
+  io.sockets.emit("newcolor", color);
+});
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin', function(req, res){
+  res.sendFile(__dirname + '/admin.html');
 });
 
 app.get('/health', function(req, res) {
     res.writeHead(200);
     res.end();
   });
+
+
+/* ************************************************************* */
+
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -31,8 +56,14 @@ io.on('connection', function(socket){
   });
 });*/
 
+io.on('connection', function(socket){
+  socket.on('nColor', function(msg){
+    io.emit('newcolor', msg);
+  });
+});
+
 io.on("connection", function (socket) {  
-    // to make things interesting, have it send every second
+    // to make things interesting, have it send every 2 second
     clearInterval(interval);
     interval = setInterval(function () {
         var msg = Date.now();
@@ -45,6 +76,10 @@ io.on("connection", function (socket) {
         clearInterval(interval);
     });
 });
+
+
+
+/* ************************************************************* */
 
 /*http.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
   console.log(`Application worker ${process.pid} started...`);

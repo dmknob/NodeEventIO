@@ -14,9 +14,15 @@
     </style>
   </head>
   <body>
-    <ul>
-      <li id="messages"></li>
-    </ul>
+    <div>
+      <ul>
+        <li id="messages"></li>
+      </ul>
+
+    <div>
+      <button onclick="newColor()">Assinar</button>
+    </div>
+
     <!--<form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form> -->
@@ -32,14 +38,24 @@
       socket.on('blink', function(msg){
         //$('#messages').append($('<li>').text(msg));
         document.getElementById("messages").innerHTML = "<h1>" + msg + "</h1>";
-        var cor = (msg % 1024);
-        document.body.style.backgroundColor = "#" + cor;
-        console.log(cor);
+        //var cor = (msg % 1024);
+        //document.body.style.backgroundColor = "#" + cor;
+        //console.log(cor);
         //$("<li>' + msg + '</li>").replaceAll("messages");
       });
+      /*
       socket.on('blink', function(msg){
         console.log(msg);
+      });*/
+
+      function newColor(){
+        console.log("New Color call");
+        socket.on('newcolor', function(msg) {
+          document.body.style.backgroundColor = msg || "#0F0";
+          console.log(msg);
       });
+      };
+
     </script>
   </body>
 </html>
