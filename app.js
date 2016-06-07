@@ -46,12 +46,11 @@ io.on("connection", function (socket) {
     });
 });
 
-http.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
+/*http.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
   console.log(`Application worker ${process.pid} started...`);
 });
-/*
+*/
 http.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = http.address();
   console.log("Server listening at", addr.address + ":" + addr.port);
 });
-*/
