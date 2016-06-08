@@ -13,11 +13,10 @@ app.post('/admin', function(req, res){
   color = req.body.color;
   //res.writeHead(200);
   //res.end();
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('thanks');
-  res.redirect('back');
+  //res.writeHead(200, {'Content-Type': 'text/html'});
   console.log(color);
   io.sockets.emit("newcolor", color);
+  res.redirect('/admin');
 });
 
 app.get('/', function(req, res){
