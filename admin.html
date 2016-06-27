@@ -4,29 +4,40 @@
     <title>Socket.IO test</title>
   </head>
   <body>
-  	<form name="form1" method="post">
-  		<input id="txt1" type="text" name="color" value="#00F"><br>
-  		<button type="submit" value="Submit">text </button>
+    <form name="form1" method="post">
+      <input id="txt1" type="text" name="color" value="#00F"><br>
+      <button type="submit" value="Submit">text </button>
     </form>
 
     <button onclick="emitir()">Emitir evento</button>
     <button onclick="getCor()">Cor</button>
+    <button onclick="gremio()">Gremio</button>
+    <button onclick="hino()">Tocar Hino</button>
 
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-    	var socket = io();
+      var socket = io();
 
-    	function getCor() {
-    		var x = document.forms["form1"]["txt1"].value;
-    		//var x = document.getElementById("txt1").innerHTML;
-    		//console.log(x);
-    		return x;
-    	}
+      function getCor() {
+        var x = document.forms["form1"]["txt1"].value;
+        //var x = document.getElementById("txt1").innerHTML;
+        //console.log(x);
+        return x;
+      }
 
-    	function emitir() {
-    		socket.emit('nColor', getCor());
-    	};
+      function emitir() {
+        socket.emit('nColor', getCor());
+      };
+      
+      function gremio() {
+        socket.emit('gremio');
+      };
+
+      function hino() {
+        socket.emit('hino');
+      };
+
     </script>
   </body>
 </html>

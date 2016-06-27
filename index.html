@@ -13,7 +13,7 @@
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
-  <body>
+  <body> <!--onload="armazena()"> -->
     <div>
       <ul>
         <li id="messages"></li>
@@ -21,8 +21,15 @@
 
     <div>
       <button onclick="newColor()">Assinar</button>
+      <button onclick="seqColor()">Assinar Cores</button>
+      <button onclick="hino()">Assinar Hino</button>
+      <button onclick="cliTime()">Envia Hora</button>
     </div>
 
+    <audio controls>
+      <source src="http://meuddns.tk/gremio.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
     <!--<form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form> -->
@@ -55,6 +62,53 @@
           console.log(msg);
       });
       };
+
+      function seqColor(){
+        console.log("Seq Color call");
+        socket.on('seqColor', function(msg) {
+          document.body.style.backgroundColor = msg;
+          console.log(msg);
+      });
+      };
+
+      function hino(){
+        console.log("Hino call");
+        socket.on('playHino', function() {
+          var a = document.getElementsByTagName("audio")[0];
+          a.play();
+          console.log("Playing Hino");
+      });
+      };
+
+      function cliTime() {
+        var tempo = Date();
+        socket.emit('cliTime', tempo);
+      };
+
+      /*function armazena(){
+        if (typeof(localStorage) == 'undefined' ) 
+        {
+          alert('Your browser does not support HTML5 localStorage. Try upgrading.');
+        } 
+        else 
+        {
+          alert('Your browser support HTML5 localStorage.');
+        }
+      };
+      */
+        /*try                          
+        { 
+          localStorage.setItem(i, xmlRowString);
+        } 
+        catch (e) 
+        {
+          alert("save failed!");
+          if (e == QUOTA_EXCEEDED_ERR) 
+          {
+            alert('Quota exceeded!'); //data wasn't successfully saved due to quota exceed so throw an error
+          }
+        }
+      }*/
 
     </script>
   </body>

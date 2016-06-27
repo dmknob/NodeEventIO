@@ -2,7 +2,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
-var interval;
+var interval = undefined;
+var seila = 1;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -10,7 +11,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/admin', function(req, res){
-  color = req.body.color;
+  var color = req.body.color;
   //res.writeHead(200);
   //res.end();
   //res.writeHead(200, {'Content-Type': 'text/html'});
@@ -32,6 +33,22 @@ app.get('/health', function(req, res) {
     res.end();
   });
 
+/* ************************************************************* */
+
+function gremio(){
+  if(seila== 1) {
+    io.sockets.emit("seqColor", '#FFF');
+    seila=2;
+  }
+  else if(seila==2) {
+      io.sockets.emit("seqColor", '#000');
+      seila=3;
+  }
+  else {
+      io.sockets.emit("seqColor", '#1fb7f1');
+      seila=1;
+  }
+};
 
 /* ************************************************************* */
 
@@ -54,10 +71,29 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
 });*/
+io.on('connection', function(socket){
+  socket.on('hino', function(msg){
+    io.emit('playHino', msg);
+  });
+});
+
+io.on('connection', function(socket){
+  socket.on('cliTime', function(tempo){
+    console.log(tempo);
+    console.log("My: " + Date());
+    //interv = setInterval(gremio, 1666);
+  });
+});
 
 io.on('connection', function(socket){
   socket.on('nColor', function(msg){
     io.emit('newcolor', msg);
+  });
+});
+
+io.on('connection', function(socket){
+  socket.on('gremio', function(){
+    interv = setInterval(gremio, 1666);
   });
 });
 
